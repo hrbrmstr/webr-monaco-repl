@@ -188,7 +188,6 @@ export const rCompletions = {
 				documentation: 'Compute MD5 checksums of files.'
 			},
 		];
-		console.log("suggest")
 		return { suggestions };
 	}
 }

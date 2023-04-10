@@ -4,6 +4,21 @@ import { rCompletions } from "./completions.js";
 import { cowsay, plotR, instructions } from "./boilerplate.js";
 import { default as DOMPurify } from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.1/+esm'
 import picoModal from 'https://cdn.jsdelivr.net/npm/picomodal@3.0.0/+esm'
+import { default as lf } from 'https://cdn.jsdelivr.net/npm/localforage@1.10.0/+esm'
+
+
+globalThis.lf = lf
+
+// debugging
+lf.config({
+	name: 'webrider-localforage',
+	storeName: 'rObjs',
+	description: 'Objects for WebRIDEr'
+});
+
+const keys = await lf.keys()
+
+console.log("keys", keys)
 
 // setup our handlers for the Console
 
@@ -141,6 +156,56 @@ paste0(c("<table class='r-env-view'>", sapply(ls(), function(.x) {
 			}
 		}).show();
 	}
+
+	async function saveWorkspace() {
+		console.log("save workspace")
+		const res = await globalThis.webRConsole.webR.evalR(`save.image()`)
+		console.log("res: ", res)
+		const rData = await globalThis.webRConsole.webR.FS.readFile(".RData")
+		console.log("rData: ", rData)
+		await lf.setItem("WORKSPACE", rData);
+	}
+
+	editor.addAction({
+		id: 'save-webr-workspace',
+		label: 'WebR: Save Workspace',
+		// keybindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_L ], // Optional: Assign a keybinding
+		contextMenuGroupId: 'navigation',
+		contextMenuOrder: 1.5,
+		run: saveWorkspace
+	});
+
+	async function loadWorkspace() {
+		console.log("load workspace")
+		const rData = await lf.getItem("WORKSPACE")
+		console.log("rData: ", rData)
+		let res = await globalThis.webRConsole.webR.FS.writeFile(".RData", rData)
+		console.log("fs.writefile")
+		res = await globalThis.webRConsole.webR.evalR(`load(".RData")`)
+		console.log("load: ", res)
+	}
+
+	editor.addAction({
+		id: 'load-webr-workspace',
+		label: 'WebR: Load Workspace',
+		// keybindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_L ], // Optional: Assign a keybinding
+		contextMenuGroupId: 'navigation',
+		contextMenuOrder: 1.5,
+		run: loadWorkspace
+	});
+
+	async function interruptSession() {
+		await globalThis.webRConsole.interrupt()
+	}
+
+	editor.addAction({
+		id: 'interrupt-webr-session',
+		label: 'WebR: Interrupt Session',
+		// keybindings: [ monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_L ], // Optional: Assign a keybinding
+		contextMenuGroupId: 'navigation',
+		contextMenuOrder: 1.5,
+		run: interruptSession
+	});
 
 	editor.addAction({
 		id: 'view-webr-history',
