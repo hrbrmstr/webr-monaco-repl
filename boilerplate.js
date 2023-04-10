@@ -30,6 +30,9 @@ export const instructions = `
 #   of functions to upload ".RData" file into a WebR context
 #   and download the saved workspace to local disk as well.)
 #
+# - Added "WebR: Interrupt Session" which lets you stop long
+#   running jobs.
+#
 # ==========================================================
 #
 # This pane is Microsoft's Monaco editor that they
