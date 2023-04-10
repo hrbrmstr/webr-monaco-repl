@@ -11,7 +11,9 @@ export const instructions = `# This is Microsoft's Monaco editor that they
 #   on your lesser operating systems.
 # - You can also make a multi-line selection and
 #   "CMD-Enter" to have all that go to the R console
-# - CTRL-L will clear the "R Console"
+# - CTRL-l will clear the "R Console"
+# - CMD-shift-i inserts |>
+# - OPTION-shift-MINUS inserts <-
 # 
 # The "R Console" output pane should auto-scroll but I 
 # am no HTML "expert".
@@ -41,6 +43,11 @@ export const instructions = `# This is Microsoft's Monaco editor that they
 #
 # Select the cowsay() function, CMD-Enter, then
 # cowsay something!
+
+source("https://rud.is/data/stringb.R")
+source("https://rud.is/data/basetheme.R")
+source("https://rud.is/data/plot2.R")
+
 `
 
 export const plotR = `canvas(bg="white")

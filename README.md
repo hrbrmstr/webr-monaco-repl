@@ -13,6 +13,8 @@ I wouldn't pay for this, but it's a pretty decent IDE for WebR, given WebR itsel
     - **WebR: Clear Local Storage** — nuke local storage and replace with the default document
     - **WebR: Save Canvas as PNG** — what it says
     - **WebR: Save Source Pane** — what it says
+- cmd-shift-i inserts `|>`
+- option-shift-minus inserts `<-`
 
 ## Top Right Plot Pane
 
@@ -20,7 +22,7 @@ I wouldn't pay for this, but it's a pretty decent IDE for WebR, given WebR itsel
 
 ## Bottom Right Console
 
-- uneditable & non-interactive output place for what is sent to the R console, including `stdout` and `stderr`
+- non-editable & non-interactive output place for what is sent to the R console, including `stdout` and `stderr`
 
 See it live! <https://rud.is/w/webr-monaco-repl/>
 

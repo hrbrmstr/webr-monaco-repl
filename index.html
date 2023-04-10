@@ -206,6 +206,25 @@
 			}
 		});
 
+		editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.KEY_I, 
+		function () {
+			var currentPosition = editor.getPosition();
+			editor.executeEdits("", [ {
+				range: new monaco.Range(currentPosition.lineNumber, currentPosition.column, currentPosition.lineNumber, currentPosition.column),
+				text: "|>"
+			} ]);
+		});
+
+		editor.addCommand(monaco.KeyMod.Alt | monaco.KeyMod.Shift | monaco.KeyCode.US_MINUS,
+			function () {
+				var currentPosition = editor.getPosition();
+				editor.executeEdits("", [ {
+					range: new monaco.Range(currentPosition.lineNumber, currentPosition.column, currentPosition.lineNumber, currentPosition.column),
+					text: "<-"
+				} ]);
+			});
+
+
 	});
 	</script>
 	
