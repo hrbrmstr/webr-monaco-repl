@@ -2,6 +2,13 @@ export const rCompletions = {
 	provideCompletionItems: () => {
 		const suggestions = [
 			{
+				label: 'install.runiverse',
+				kind: monaco.languages.CompletionItemKind.Function,
+				insertText: 'install.runiverse(${1:x})',
+				insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+				documentation: 'Attempt to install a single package from R Universe.'
+			},
+			{
 				label: 'apply',
 				kind: monaco.languages.CompletionItemKind.Function,
 				insertText: 'apply(${1:X}, ${2:MARGIN}, ${3:FUN})',

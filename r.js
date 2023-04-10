@@ -1,4 +1,42 @@
-export const rVersion = await globalThis.webR.evalRString(`paste0(unclass(getRversion())[[1]][1:2], collapse=".")`)
+import { Console, WebR } from 'https://webr.r-wasm.org/v0.1.1/webr.mjs';
+import { json as readJSON } from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+
+const webRConsole = new Console({
+
+	stdout: line => {
+		const outpre = document.getElementById("outpre")
+		outpre.innerText += line + '\n';
+		outpre.scrollTop = outpre.scrollHeight;
+	},
+
+	stderr: line => {
+		const outpre = document.getElementById("outpre")
+		outpre.innerText += line + '\n';
+		outpre.scrollTop = outpre.scrollHeight;
+	},
+
+	prompt: p => {
+		const outpre = document.getElementById('outpre')
+		outpre.innerText += "> "
+		outpre.scrollTop = outpre.scrollHeight;
+	},
+
+	canvasExec: c => {
+		Function(`document.getElementById('plot-canvas').getContext('2d').${c}`)()
+	},
+
+});
+
+webRConsole.run();
+webRConsole.webR.init();
+
+globalThis.webRConsole = webRConsole; // handy
+
+// second context to do side R ops w/o interfering with main one
+globalThis.utilR = new WebR();
+await globalThis.utilR.init();
+
+export const rVersion = await globalThis.utilR.evalRString(`paste0(unclass(getRversion())[[1]][1:2], collapse=".")`)
 
 /**
  * Install one or more R packages from R universe
@@ -39,12 +77,15 @@ export async function installRUniversePackages(pkgs) {
  */
 function installRUniversePackageFromURL(pkg, rUniverseURL) {
 
-	globalThis.webR.evalR(`
-tmp <- tempfile()
-message(paste("Installing webR package: ${pkg} from ${rUniverseURL}"));
-utils::download.file("${rUniverseURL}", tmp, quiet = FALSE);
-utils::untar(tmp, exdir = .libPaths()[[1]], tar = "internal", extras = "--no-same-permissions");
-`)
+	globalThis.webRConsole.stdin(`message(paste("Installing webR package: ${pkg} from ${rUniverseURL}"));`); 
+
+	const rCode = `
+.tmp <- tempfile()
+utils::download.file("${rUniverseURL}", .tmp, quiet = FALSE);
+utils::untar(.tmp, exdir = .libPaths()[[1]], tar = "internal", extras = "--no-same-permissions");
+rm(.tmp)
+`
+	globalThis.webRConsole.webR.evalR(rCode)
 
 }
 
