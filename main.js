@@ -18,8 +18,6 @@ lf.config({
 
 const keys = await lf.keys()
 
-console.log("keys", keys)
-
 // setup our handlers for the Console
 
 // Configure the Monaco Editor
@@ -113,7 +111,6 @@ require([ 'vs/editor/editor.main' ], function () {
 
 	// pair of functions to clear local storage and restore boilerplate
 	function clearLocalStorage() {
-		console.log("Clearing storage")
 		localStorage.removeItem('savedCode');
 		editor.setValue(`${instructions}\n\n${cowsay}\n\n${plotR}\n\n`)
 	}
@@ -158,11 +155,8 @@ paste0(c("<table class='r-env-view'>", sapply(ls(), function(.x) {
 	}
 
 	async function saveWorkspace() {
-		console.log("save workspace")
 		const res = await globalThis.webRConsole.webR.evalR(`save.image()`)
-		console.log("res: ", res)
 		const rData = await globalThis.webRConsole.webR.FS.readFile(".RData")
-		console.log("rData: ", rData)
 		await lf.setItem("WORKSPACE", rData);
 	}
 
@@ -176,13 +170,9 @@ paste0(c("<table class='r-env-view'>", sapply(ls(), function(.x) {
 	});
 
 	async function loadWorkspace() {
-		console.log("load workspace")
 		const rData = await lf.getItem("WORKSPACE")
-		console.log("rData: ", rData)
 		let res = await globalThis.webRConsole.webR.FS.writeFile(".RData", rData)
-		console.log("fs.writefile")
 		res = await globalThis.webRConsole.webR.evalR(`load(".RData")`)
-		console.log("load: ", res)
 	}
 
 	editor.addAction({
