@@ -3,7 +3,9 @@
 # project dir
 project := "webr-monaco-repl"
 
-syncDest := "rud.is:~/rud.is/w/" + project + "/"
+syncDest1 := "rud.is:~/rud.is/w/" + project + "/"
+syncDest2 := "rud.is:~/rud.is/w/repl/"
+syncDest3 := "rud.is:~/rud.is/webrider/"
 
 # list out the available actions
 default:
@@ -11,7 +13,9 @@ default:
 
 # sync to server
 rsync:
-  rsync -avp --exclude .git --exclude .gitignore --exclude node_modules ./ {{syncDest}}
+  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude node_modules ./ {{syncDest1}}
+  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude node_modules ./ {{syncDest2}}
+  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude node_modules ./ {{syncDest3}}
 
 # install/update miniserve
 install-miniserve:
