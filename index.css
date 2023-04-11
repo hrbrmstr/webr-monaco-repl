@@ -101,12 +101,14 @@
 .tabhead {
   display: flex;
   width: 100%;
-  height: 1.5rem;
+  height: 1rem;
   /* border: 1px solid red; */
   overflow-y: scroll;
   overflow: hidden;
   align-items: flex-start;
-	margin-bottom: 1rem;
+	margin-bottom: 0;
+	padding-bottom: 0;
+	/* margin-bottom: 1rem; */
 }
 
 .tabbtn {
@@ -114,7 +116,7 @@
   border: none;
   background-color: white;
   padding: 0;
-  width: 33.33%;
+  /* width: 33.33%; */
   text-align: center;
   border-right: 1px solid #ccc;
 }
@@ -141,8 +143,6 @@
 
 #plot-canvas {
 	background-color: #1e1e1e;
-	/* overflow: auto;
-	overflow-y: scroll; */
 	width: 40vw;
 	height: 40vw;
 	max-height: 80vh;
@@ -153,9 +153,34 @@
 }
 
 .canvas-wrapper {
+	margin-top:1rem;
 	width: 100%;
 	height: 100%;
 	overflow: auto;
 	display: flex;
 	justify-content: center;
+}
+
+.env-row {
+  display: flex;
+	width: 100%;
+	background-color: peru;
+	padding-left: 0.2rem;
+	padding-right: 0.2rem;
+}
+
+.env-row-cell {
+	flex: 1;
+	padding: 0.2rem;
+	font-family: monospace;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	border: 0.5px solid black;
+	cursor: pointer;
+}
+
+.env-row-cell:hover {
+	background-color: lightgray;
+	/* add background color on hover */
 }

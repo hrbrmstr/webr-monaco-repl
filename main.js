@@ -2,31 +2,14 @@ import * as RLang from './rlang.js'
 import { installRUniversePackages } from './r.js'
 import { rCompletions } from "./completions.js";
 import { cowsay, plotR, instructions } from "./boilerplate.js";
+import { refreshEnvTab } from "./tabs.js"
 import { default as DOMPurify } from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.1/+esm'
 import picoModal from 'https://cdn.jsdelivr.net/npm/picomodal@3.0.0/+esm'
 import { default as lf } from 'https://cdn.jsdelivr.net/npm/localforage@1.10.0/+esm'
 
-const tabButtons = document.querySelectorAll('.tabbtn');
-const tabs = document.querySelectorAll('.tab');
-
-tabButtons.forEach((button, index) => {
-	button.addEventListener('click', () => {
-		tabButtons.forEach(button => {
-			button.classList.remove('active');
-		});
-		tabs.forEach(tab => {
-			tab.classList.add('hidden');
-			tab.classList.remove('active');
-		});
-		button.classList.add('active');
-		tabs[ index ].classList.remove('hidden');
-		tabs[ index ].classList.add('active');
-	});
-});
-
 globalThis.lf = lf
 
-// debugging
+// for debugging
 lf.config({
 	name: 'webrider-localforage',
 	storeName: 'rObjs',
@@ -78,11 +61,12 @@ require([ 'vs/editor/editor.main' ], function () {
 		globalThis.RHistory.push(selectedText)
 
 		if (selectedText.startsWith("?")) {
-			window.open(`https://rdocs.rud.is/#q=r ${DOMPurify.sanitize(selectedText.trim().slice(1))}`, '_rdocs')
+			const url = `https://rdocs.rud.is/#q=r ${DOMPurify.sanitize(selectedText.trim().slice(1))}`
+			window.open(url, 'RDOCS');
 			return
 		} else if (selectedText.startsWith("browseURL")) {
 			const url = DOMPurify.sanitize(selectedText.match(/browseURL\((["'])(.*?)\1\)/)[ 2 ]);
-			window.open(url, "blank")
+			window.open(url, "_blank")
 			const outpre = document.getElementById("outpre")
 			outpre.innerText += "# Help tab opened" + '\n> ';
 			outpre.scrollTop = outpre.scrollHeight
@@ -103,6 +87,8 @@ require([ 'vs/editor/editor.main' ], function () {
 
 		const outpre = document.getElementById("outpre")
 		outpre.scrollTop = outpre.scrollHeight; // scroll into view
+
+		await refreshEnvTab()
 
 	}
 
