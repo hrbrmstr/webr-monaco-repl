@@ -17,7 +17,6 @@ tabButtons.forEach((button, index) => {
 });
 
 export async function refreshEnvTab() {
-	console.log("refresh env tab")
 
 	const res = await globalThis.webRConsole.webR.evalR(`
 ls() |> sort() |> lapply(function(.obj) {
@@ -52,17 +51,15 @@ ls() |> sort() |> lapply(function(.obj) {
 `)
 	
 	const envTab = document.getElementById("env-tab")
-	while (envTab.firstChild) {
-		envTab.removeChild(envTab.firstChild);
-	}
+	// while (envTab.firstChild) {
+	// 	envTab.removeChild(envTab.firstChild);
+	// }
 
 	const fragment = document.createDocumentFragment();
 
 	for await (const r of res) {
 
 		const obj = await r.toJs();
-
-		console.log(obj)
 
 		const row = document.createElement("div");
 		row.classList.add("env-row");
@@ -86,4 +83,36 @@ ls() |> sort() |> lapply(function(.obj) {
 	envTab.replaceChildren(fragment)
 	envTab.style.display = ''; 
 
+}
+function createTree(paths) {
+	const tree = {};
+
+	paths.forEach(path => {
+		let parts = path.split('/');
+		let currentLevel = tree;
+
+		parts.forEach((part, index) => {
+			if (!currentLevel[ part ]) {
+				currentLevel[ part ] = index === parts.length - 1 ? null : {};
+			}
+			currentLevel = currentLevel[ part ];
+		});
+	});
+
+	return tree;
+}
+
+
+export async function refreshDirTree() {
+
+	const res = await globalThis.webRConsole.webR.evalR(`
+list.files("..", all.files = TRUE, recursive = TRUE, include.dirs = TRUE)
+`)
+	
+	const tree = await res.toArray()
+
+	const fsPre = document.getElementById("fs-pre")
+	
+	fsPre.innerText = tree.join("\n")
+	
 }

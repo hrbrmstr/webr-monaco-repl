@@ -13,9 +13,9 @@ default:
 
 # sync to server
 rsync:
-  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude node_modules ./ {{syncDest1}}
-  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude node_modules ./ {{syncDest2}}
-  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude node_modules ./ {{syncDest3}}
+  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude CHANGELOG.md --exclude node_modules ./ {{syncDest1}}
+  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude CHANGELOG.md --exclude node_modules ./ {{syncDest2}}
+  rsync -avp --exclude .git --exclude .gitignore --exclude package.json --exclude package-lock.json --exclude README.md --exclude target  --exclude LICENSE --exclude CHANGELOG.md --exclude node_modules ./ {{syncDest3}}
 
 # install/update miniserve
 install-miniserve:

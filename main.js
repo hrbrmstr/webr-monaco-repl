@@ -2,7 +2,7 @@ import * as RLang from './rlang.js'
 import { installRUniversePackages } from './r.js'
 import { rCompletions } from "./completions.js";
 import { cowsay, plotR, instructions } from "./boilerplate.js";
-import { refreshEnvTab } from "./tabs.js"
+import { refreshEnvTab, refreshDirTree } from "./tabs.js"
 import { default as DOMPurify } from 'https://cdn.jsdelivr.net/npm/dompurify@3.0.1/+esm'
 import picoModal from 'https://cdn.jsdelivr.net/npm/picomodal@3.0.0/+esm'
 import { default as lf } from 'https://cdn.jsdelivr.net/npm/localforage@1.10.0/+esm'
@@ -89,6 +89,7 @@ require([ 'vs/editor/editor.main' ], function () {
 		outpre.scrollTop = outpre.scrollHeight; // scroll into view
 
 		await refreshEnvTab()
+		await refreshDirTree()
 
 	}
 

@@ -182,5 +182,8 @@
 
 .env-row-cell:hover {
 	background-color: lightgray;
-	/* add background color on hover */
+}
+
+#fs-tab {
+	padding:1rem;
 }
