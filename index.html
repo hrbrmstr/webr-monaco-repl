@@ -31,15 +31,58 @@
 		<div id="editor" class="container__left"></div>
 		<div class="resizer" data-direction="horizontal"></div>
 		<div class="container__right">
-			<div id="help" class="container__top">
-			<canvas id="plot-canvas" width="1008" height="1008"></canvas>
+
+			<div id="top-pane" class="container__top">
+
+				<div id="tabhead" class="tabhead">
+					<button id="tabbtn1" class="tabbtn active">plot</button>
+					<button id="tabbtn2" class="tabbtn">fs</button>
+					<!-- <button id="tabbtn3" class="tabbtn">env</button> -->
+				</div>
+
+					<div id="tab1" class="tab active">
+							<div class="canvas-wrapper">
+
+					  <canvas id="plot-canvas" width="1008" height="1008"></canvas>
+						</div>
+					</div>
+
+					<div id="tab2" class="tab hidden">
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+						<p>tab2</p>
+					</div>
+
+					<!-- <div id="tab3" class="tab hidden">
+						env
+					</div> -->
+
 			</div>
+
 			<div class="resizer" data-direction="vertical"></div>
+
 			<div id="output" class="container__bottom">
 				<pre id="outpre"><code id="out"></code></pre>
 			</div>
 		</div>
 	</div>
+
 </body>
 
 </html>

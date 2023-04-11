@@ -6,6 +6,23 @@ import { default as DOMPurify } from 'https://cdn.jsdelivr.net/npm/dompurify@3.0
 import picoModal from 'https://cdn.jsdelivr.net/npm/picomodal@3.0.0/+esm'
 import { default as lf } from 'https://cdn.jsdelivr.net/npm/localforage@1.10.0/+esm'
 
+const tabButtons = document.querySelectorAll('.tabbtn');
+const tabs = document.querySelectorAll('.tab');
+
+tabButtons.forEach((button, index) => {
+	button.addEventListener('click', () => {
+		tabButtons.forEach(button => {
+			button.classList.remove('active');
+		});
+		tabs.forEach(tab => {
+			tab.classList.add('hidden');
+			tab.classList.remove('active');
+		});
+		button.classList.add('active');
+		tabs[ index ].classList.remove('hidden');
+		tabs[ index ].classList.add('active');
+	});
+});
 
 globalThis.lf = lf
 
